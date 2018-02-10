@@ -8,4 +8,4 @@ denguetorpedo:
   environment:
   - DATABASE_URL
   volumes:
-  - /home/yohanna/desarrollo/denguetorpedo:/home/dengue/denguetorpedo
+  - /changeme/denguetorpedo:/home/dengue/denguetorpedo
