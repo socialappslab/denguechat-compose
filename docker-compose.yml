@@ -1,0 +1,11 @@
+denguetorpedo:
+  build: ./denguetorpedo
+  ports:
+    - "3000:3000"
+  command: "./deploy.sh"
+  net: "host"
+  container_name: denguetorpedo
+  environment:
+  - DATABASE_URL
+  volumes:
+  - /home/yohanna/desarrollo/denguetorpedo:/home/dengue/denguetorpedo
