@@ -1,3 +1,11 @@
+redis:
+  image: bitnami/redis:latest
+  ports:
+    - "6379:6379"
+  net: "host"
+  environment:
+  - REDIS_PASSWORD
+
 denguetorpedo:
   build: ./denguetorpedo
   ports:
@@ -7,5 +15,7 @@ denguetorpedo:
   container_name: denguetorpedo
   environment:
   - DATABASE_URL
+  - REDISTOGO_URL
+  - S3_BUCKET_NAME
   volumes:
-  - /changeme/denguetorpedo:/home/dengue/denguetorpedo
+  - /path/to/denguetorpedo:/home/dengue/denguetorpedo
