@@ -5,6 +5,7 @@ redis:
   net: "host"
   environment:
   - REDIS_PASSWORD
+  container_name: denguetorpedo-redis
 
 denguetorpedo:
   build: ./denguetorpedo
