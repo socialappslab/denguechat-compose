@@ -6,6 +6,7 @@ RUN useradd dengue -m -g dengue -s /bin/bash
 RUN passwd -d -u dengue
 RUN apt-get update
 RUN apt-get install -y sudo nodejs
+RUN apt-get install -y imagemagick
 RUN echo "dengue ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dengue
 RUN chmod 0440 /etc/sudoers.d/dengue
 RUN mkdir -p ${PROJECT_HOME}
@@ -19,4 +20,4 @@ RUN mkdir ${PROJECT_HOME}/denguetorpedo
 RUN cd ${PROJECT_HOME}/denguetorpedo
 RUN gem install rails -v 4.2.5
 RUN gem install bundler
-
+RUN sudo ln -s /usr/bin/convert /usr/local/bin/convert
