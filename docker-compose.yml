@@ -10,7 +10,7 @@ redis:
 denguetorpedo:
   build: ./denguetorpedo
   ports:
-    - "3000:3000"
+    - "3001:3001"
   command: "./deploy.sh"
   net: "host"
   container_name: denguetorpedo
@@ -18,5 +18,25 @@ denguetorpedo:
   - DATABASE_URL
   - REDISTOGO_URL
   - S3_BUCKET_NAME
+  - RAILS_ENV
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - PUMA_THREADS
+  - PUMA_WORKERS
+  - SENDGRID_PASSWORD
+  - SENDGRID_USERNAMEJWT_ISSUER
+  - JWT_SECRET
+  - LIBRATO_PASSWORD
+  - LIBRATO_TOKEN
+  - LIBRATO_USER
+  - LOADERIO_API_KEY
+  - MEMCACHIER_PASSWORD
+  - MEMCACHIER_SERVERS
+  - MEMCACHIER_USERNAME
+  - NEW_RELIC_APP_NAME
+  - NEW_RELIC_LICENSE_KEY
+  - NEW_RELIC_LOG
+  - ROLLBAR_ACCESS_TOKEN
+  - ROLLBAR_ENDPOINT
   volumes:
-  - /path/to/denguetorpedo:/home/dengue/denguetorpedo
+  - /home/appcivist/production/denguetorpedo:/home/dengue/denguetorpedo
