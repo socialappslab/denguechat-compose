@@ -1,10 +1,12 @@
 redis:
-  image: bitnami/redis:latest
+  build: ./redis
   ports:
     - "6379:6379"
   net: "host"
   env_file: .env
   container_name: denguetorpedo-redis
+  volumes:
+    - redis/redis-volume:/bitnami
 
 denguetorpedo:
   build: ./denguetorpedo
