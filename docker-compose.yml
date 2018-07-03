@@ -10,6 +10,8 @@ redis:
 
 denguetorpedo:
   build: ./denguetorpedo
+  ports:
+    - "3001:3001"
   command: "./deploy.sh"
   net: "host"
   container_name: denguetorpedo
