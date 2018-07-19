@@ -7,6 +7,7 @@ redis:
   container_name: denguetorpedo-redis
   volumes:
     - /home/appcivist/production/denguechat-compose/redis/redisVolume:/bitnami
+  restart: always
 
 denguetorpedo:
   build: ./denguetorpedo
@@ -18,3 +19,4 @@ denguetorpedo:
   env_file: .env
   volumes:
   - /home/appcivist/production/denguetorpedo:/home/dengue/denguetorpedo
+  restart: always
