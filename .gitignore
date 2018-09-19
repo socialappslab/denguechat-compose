@@ -1,3 +1,5 @@
 .idea/
 .env
 redis/redis-volume/data/*
+denguetorpedo/denguetorpedo/*
+redis/redisVolume/*
