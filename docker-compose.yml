@@ -1,8 +1,9 @@
 redis:
   build: ./redis
+  expose:
+    - "6379"
   ports:
     - "6379:6379"
-  net: "host"
   env_file: .env
   container_name: denguetorpedo-redis
   volumes:
@@ -11,13 +12,18 @@ redis:
 
 denguetorpedo:
   build: ./denguetorpedo
+  expose:
+    - "3001"
+    - "5000"
   ports:
     - "3001:3001"
     - "5000:5000"
   command: "./deploy.sh"
-  net: "host"
   container_name: denguetorpedo
   env_file: .env
   volumes:
   - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
   restart: always
+  extra_hosts:
+    postgreshost: <server_ip>
+ 
