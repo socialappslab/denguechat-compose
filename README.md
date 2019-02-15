@@ -1,20 +1,29 @@
 
 # denguechat-compose
-Docker compose for DengueChat
+Docker compose for [DengueChat](https://github.com/socialappslab/denguetorpedo)
+
 ## To Run
-- Clone the repo https://github.com/socialappslab/denguetorpedo and set his path in the docker-compose.yml en la variable denguetorpedo.volumes
-- Create a copy of the file .env.sample and edit according to the postgresql database user, password and database name, and the redis password.
-- run `docker-compose build && docker-compose up -d`
 
-Access http://localhost:5000
+If you are running for local development, make sure to first checkout the `localdev` branch. 
 
-## To view logs:
-1. `docker logs denguetorpedo`
-2. `docker logs denguetorpedo-redis`
-3. Ingresar al contenedor: `docker exec -t -i denguetorpedo /bin/bash` 
-- Ejecuctar `tail -f -n1 home/dengue/denguetorpedo/log/sidekiq.log`
+1. Clone the DengueChat repository from this [link](https://github.com/socialappslab/denguetorpedo) 
+2. Set the path where DengueChat was cloned in the `docker-compose.yml` 
+3. Create a copy of the file `.env.sample` and edit the varialbles for: 
+    - PostgreSQL database user, password and database name
+    - Redis password
+4. Run `docker-compose build && docker-compose up -d`
 
-# MAC Tips
+Access DengueChat UI at `http://localhost:3000`
+
+## Useful docker commands: 
+1. View denguetorpedo container logs: `docker logs denguetorpedo`
+2. View redis containerlogs: `docker logs denguetorpedo-redis`
+3. Accessing the container: `docker exec -t -i denguetorpedo /bin/bash` 
+4. View sidekiq logs: access the container (3) en run `tail -f -n1 home/dengue/denguetorpedo/log/sidekiq.log`
+
+# Local Development 
+**Obs.** these are tips based on Mac OSX development environment. 
+
 ### Install rbenv
 https://github.com/rbenv/rbenv#homebrew-on-macos 
 
