@@ -21,3 +21,4 @@ RUN cd ${PROJECT_HOME}/denguetorpedo
 RUN gem install rails -v 4.2.5
 RUN gem install bundler
 RUN sudo ln -s /usr/bin/convert /usr/local/bin/convert
+RUN gem install puma -v '2.11.2' --source 'http://rubygems.org/' -- --with-cppflags=-I/usr/local/opt/openssl/include
