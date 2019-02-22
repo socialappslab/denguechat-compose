@@ -6,17 +6,18 @@ redis:
   env_file: .env
   container_name: denguetorpedo-redis
   volumes:
-    - /home/appcivist/production/denguechat-compose/redis/redisVolume:/bitnami
+    - <local_folder_for_redis>:/bitnami
   restart: always
 
 denguetorpedo:
   build: ./denguetorpedo
   ports:
     - "3001:3001"
+    - "5000:5000"
   command: "./deploy.sh"
   net: "host"
   container_name: denguetorpedo
   env_file: .env
   volumes:
-  - /home/appcivist/production/denguetorpedo:/home/dengue/denguetorpedo
+  - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
   restart: always
