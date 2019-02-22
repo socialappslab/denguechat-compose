@@ -7,11 +7,12 @@ Docker compose for [DengueChat](https://github.com/socialappslab/denguetorpedo)
 If you are running for local development, make sure to first checkout the `localdev` branch. 
 
 1. Clone the DengueChat repository from this [link](https://github.com/socialappslab/denguetorpedo) 
-2. Set the path where DengueChat was cloned in the `docker-compose.yml` 
-3. Create a copy of the file `.env.sample` and edit the varialbles for: 
+2. Create the folder `log` where the code is cloned
+3. Set the path where DengueChat was cloned in the `docker-compose.yml` 
+4. Create a copy of the file `.env.sample` and edit the varialbles for: 
     - PostgreSQL database user, password and database name
     - Redis password
-4. Run `docker-compose build && docker-compose up -d`
+5. Run `docker-compose build && docker-compose up -d`
 
 Access DengueChat UI at `http://localhost:3000`
 
@@ -28,15 +29,14 @@ Access DengueChat UI at `http://localhost:3000`
 https://github.com/rbenv/rbenv#homebrew-on-macos 
 
 ### Set Local Ruby Version
-`rbenv local 2.2.4`
+`rbenv local 2.3.0`
 
 ### Fix of Puma Gem
 La gema puma -v '2.11.2' da un error de instalación que se corrige de la siguiente manera: 
 1. Instalar openssl
 `brew install openssl`
 2. Instalar la gema utilizando open ssl
-`gem install puma -v '2.11.2' --source 'http://rubygems.org/' -- --with-cppflags=-I/usr/local/opt/openssl/include
-`
+`gem install puma -v '2.11.2' --source 'http://rubygems.org/' -- --with-cppflags=-I/usr/local/opt/openssl/include`
 
 ### .env.sample.mac
 1. Modificar DATABASE_URL
@@ -60,8 +60,10 @@ Para visualizar eso se puede utilizar: `docker inspect --format '{{ .NetworkSett
 Y agregar o modificar:  `listen_addresses='*'`
 2. Abrir el archivo `/usr/local/var/postgres/pg_hba.conf`
 Y agregar o modificar: 
-`host   all  all    0.0.0.0/0  md5`
-`local  all  postgres          md5`
+`host   all  all    0.0.0.0/0  trust`
+`local  all  postgres          trust`
+
+https://thoughtbot.com/blog/using-rbenv-to-manage-rubies-and-gems
 
 #### Poblar la base de datos
 1. Recuperar la estructura y datos (obtenidos de un pg_dump)
