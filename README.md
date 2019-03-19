@@ -7,16 +7,26 @@ Docker compose for [DengueChat](https://github.com/socialappslab/denguetorpedo),
 ```
 $ git clone https://github.com/socialappslab/denguetorpedo.git
 $ cd denguetorpedo
+$ git checkout develop
 ```
 
-2. If you would like to run this on a local machine, for development purposes, make sure you first checkout the `localdev` branch: 
+2. Create a folder named `log` where the code is cloned, to avoid errors when the systems tries to create the log file:
+
+```
+$ mkdir log
+$ cd .. 
+```
+
+3. Clone this repository and step inside the folder
+```
+$ git clone https://github.com/socialappslab/denguechat-compose.git
+$ cd denguechat-compose
+```
+
+4. If you would like to run this on a local machine, for development purposes, make sure you first checkout the `localdev` branch: 
 ```
 $ git checkout localdev
 ```
-
-3. Create a folder named `log` where the code is cloned, to avoid errors when the systems tries to create the log file:
-
-`$ mkdir log` 
 
 4. Set the path where DengueChat was cloned in the `docker-compose.yml` by replacing the text `<local_folder_of_cloned_denguetorpedo_git_project>` with the right path. For a production environment, you can use something as follows: 
 ```yaml
