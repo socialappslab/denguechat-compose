@@ -61,7 +61,7 @@ docker-compose build && docker-compose up -d
 
 10. Build and run REDIS: 
 ```
-$ docker-compose build denguetorpedo-redis && docker-compose up -d denguetorpedo-redis
+$ docker-compose build redis && docker-compose up -d redis
 ```
 
 11. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
