@@ -1,6 +1,9 @@
 # denguechat-compose
 Docker compose for [DengueChat](https://github.com/socialappslab/denguetorpedo), meant for developers and system administrators whow whish to install and run their local instances of DengueChat, either for development or for local use. 
 
+##Pre-requisites
+PostgreSQL above 9.6 version
+
 ## How to run: 
 
 1. Clone DengueChat's repository from [GitHub](https://github.com/socialappslab/denguetorpedo). Step inside the folder where the code is cloned. 
@@ -40,11 +43,16 @@ $ git checkout localdev
     - /home/appcivist/production/denguechat-compose/redis/redisVolume:/bitnami
 ```
  
-6. If you are running with the `localdev` branch, you should also replace the variable `<server_ip>` with the IP address of PostgreSQL server. If you are running postgres locally, that would be your docker host (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured, see the section `Database` below.  
+6. If you are running with the `localdev` branch, you should also add the IP address of PostgreSQL server. If you are running postgres locally, that would be your docker host (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured, see the section `Database` below. 
+Add the following, if not there:
+
 ```yaml
 extra_hosts:
-    postgreshost: 0.0.0.0 # use the right IP here. 
+    postgreshost: 0.0.0.0 
 ```
+- Replace `0.0.0.0` by the right IP of your database
+	
+	
 
 7. Create a copy of the file `.env.sample`
 ```
@@ -52,25 +60,38 @@ $ cp .env.sample .env
 ```
 8. In the new `.env` file, edit the variable `DATABASE_URL` to include the right database user, password and name: 
     - Replace `postgres:postgres` by the right `username:password` of your database
-    - Replace `<ingresar_nombre_base_datos>` with the right database name. 
+    - Replace `ddujs2u6bpdf88` with the right name of your database. 
 
 
-docker-compose build && docker-compose up -d
-
-9. In the new `.env` file, edit `REDIS_PASSWORD` with the right pass.  
+9. In the new `.env` file, edit `REDIS_PASSWORD` with the right pass.
 
 10. Build and run REDIS: 
 ```
-$ docker-compose build redis && docker-compose up -d redis
+$ docker-compose build redis 
+```
+and then 
+```
+$docker-compose up -d redis
 ```
 
-11. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
+11. Build and run denguetorpedo 
+```
+$ docker-compose build denguetorpedo  
+```
+and then 
+```
+$docker-compose up -d denguetorpedo 
+```
+12. Run the following ``docker-compose logs -f --tail=100 denguetorpedo``
+
+13. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
 ```
 $ docker inspect --format '{{ .NetworkSettings.IPAddress }}' denguetorpedo-redis
 ```
 
-12. Run `docker-compose build && docker-compose up -d`
-13. Access DengueChat UI at `http://localhost:3000`
+14. Run `docker-compose build && docker-compose up -d`
+
+15. Access DengueChat UI at `http://localhost:5000`
 
 ## Useful Notes: 
 ### Docker commands: 
