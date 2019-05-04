@@ -73,8 +73,10 @@ and then
 ```
 $docker-compose up -d redis
 ```
+11. On the file  ``denguetorpedo`` on the Dockerfile add the followin if not there
+``RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list``
 
-11. Build and run denguetorpedo 
+12. Build and run denguetorpedo 
 ```
 $ docker-compose build denguetorpedo  
 ```
@@ -82,16 +84,16 @@ and then
 ```
 $docker-compose up -d denguetorpedo 
 ```
-12. Run the following ``docker-compose logs -f --tail=100 denguetorpedo``
+13. Run the following ``docker-compose logs -f --tail=100 denguetorpedo``
 
-13. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
+14. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
 ```
 $ docker inspect --format '{{ .NetworkSettings.IPAddress }}' denguetorpedo-redis
 ```
 
-14. Run `docker-compose build && docker-compose up -d`
+15. Run `docker-compose build && docker-compose up -d`
 
-15. Access DengueChat UI at `http://localhost:5000`
+16. Access DengueChat UI at `http://localhost:5000`
 
 ## Useful Notes: 
 ### Docker commands: 

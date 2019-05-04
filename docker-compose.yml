@@ -20,7 +20,7 @@ denguetorpedo:
   env_file: .env
   volumes:
   - /home/fernando/Documentos/SE2/denguetorpedo:/home/dengue/denguetorpedo
-  #restart: always
+  restart: always
   #restart: always
   extra_hosts:
     postgreshost: 192.168.1.4
