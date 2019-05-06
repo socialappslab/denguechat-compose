@@ -4,6 +4,7 @@ ENV PROJECT_HOME /home/dengue
 RUN groupadd dengue
 RUN useradd dengue -m -g dengue -s /bin/bash
 RUN passwd -d -u dengue
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install -y sudo nodejs
 RUN apt-get install -y imagemagick

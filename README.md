@@ -53,16 +53,21 @@ $ cp .env.sample .env
 8. In the new `.env` file, edit the variable `DATABASE_URL` to include the right database user, password and name: 
     - Replace `postgres:postgres` by the right `username:password` of your database
     - Replace `<ingresar_nombre_base_datos>` with the right database name. 
-
+Where it follows this formatting
+```
+DATABASE_URL=protocol://username:password@host:port/database
+```
 
 docker-compose build && docker-compose up -d
 
-9. In the new `.env` file, edit `REDIS_PASSWORD` with the right pass.  
+9. In the new `.env` file, edit `REDIS_PASSWORD` with the right pass and add `AWS_ACCESS_KEY_ID` & `AWS_SECRET_ACCESS_KEY` with the right key. 
+
 
 10. Build and run REDIS: 
 ```
 $ docker-compose build redis && docker-compose up -d redis
 ```
+	- If you have an failure when the Dockerfile tries to run the sudo apt-get update, see the section `DOCKERFILE` below. 
 
 11. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
 ```
@@ -93,6 +98,12 @@ Puma's GEM v2.11.2 gives sometimes an installation error, which can be fixed doi
 
 **Note:** the line above is also part of the Dockerfile now, but just in case you can install it in the host.  
 
+### DOCKERFILE
+Modify the file `denguechat-compose/denguetorpedo/Dockerfile` before running any apt commands, add the following line:
+```
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+```
+
 ### Database
 #### Enable external connections: 
 1. Modify the `postgresql.conf` file, typically located at `/usr/local/var/postgres/postgresql.conf`, and add the following, if not there: `listen_addresses='*'`
@@ -105,4 +116,4 @@ local  all  postgres          trust
 #### Populate database
 1. If you have a backup, you can recover data as follows: 
 ` psql denguetorpedo < denguetorpedo.sql`
-
+    - If you have an error with the role 'XXXX'. You need to create a role with the name 'XXXX' or comment the line where the role 'XXXX' appears in the sql file.
