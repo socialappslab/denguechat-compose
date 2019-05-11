@@ -3,41 +3,32 @@ Docker compose for [DengueChat](https://github.com/socialappslab/denguetorpedo),
 
 ## How to run: 
 
-1. Clone DengueChat's repository from [GitHub](https://github.com/socialappslab/denguetorpedo). Step inside the folder where the code is cloned. 
-```
-$ git clone https://github.com/socialappslab/denguetorpedo.git
-$ cd denguetorpedo
-$ git checkout develop
-```
+1. Clone the DengueChat repository from gitkraken (https://github.com/socialappslab/denguetorpedo). Step inside the folder where the code is cloned 
 
-2. Create a folder named `log` where the code is cloned, to avoid errors when the systems tries to create the log file:
 
-```
-$ mkdir log
-$ cd .. 
-```
+2. Create a folder named `log` where the code is cloned, to avoid errors when the systems tries to create the log file
+
+
 
 3. Clone this repository and step inside the folder
-```
-$ git clone https://github.com/socialappslab/denguechat-compose.git
-$ cd denguechat-compose
-```
 
-4. If you would like to run this on a local machine, for development purposes, make sure you first checkout the `localdev` branch: 
-```
-$ git checkout localdev
-```
+ clone https://github.com/socialappslab/denguechat-compose.git
+
+
+
+If you want to run this on a local machine, for development purposes, be sure to first check the `localdev` branch, you can use gitkraken
+
 
 4. Set the path where DengueChat was cloned in the `docker-compose.yml` by replacing the text `<local_folder_of_cloned_denguetorpedo_git_project>` with the right path. For a production environment, you can use something as follows: 
 ```yaml
   volumes:
-    - /home/appcivist/production/denguetorpedo:/home/dengue/denguetorpedo
+    - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
 ```
 
 5. Set the path for the redis volume data in the `docker-compose.yml` by replacing the text `<local_folder_for_redis>` with the right path. For production environment, we use something as follows: 
 ```yaml
   volumes:
-    - /home/appcivist/production/denguechat-compose/redis/redisVolume:/bitnami
+    - <local_folder_for_redis>/redis/redisVolume:/bitnami
 ```
  
 6. If you are running with the `localdev` branch, you should also replace the variable `<server_ip>` with the IP address of PostgreSQL server. If you are running postgres locally, that would be your docker host (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured, see the section `Database` below.  
@@ -48,29 +39,40 @@ extra_hosts:
 
 7. Create a copy of the file `.env.sample`
 ```
-$ cp .env.sample .env
+ 
 ```
 8. In the new `.env` file, edit the variable `DATABASE_URL` to include the right database user, password and name: 
     - Replace `postgres:postgres` by the right `username:password` of your database
     - Replace `<ingresar_nombre_base_datos>` with the right database name. 
+	DATABASE_URL=protocol://username:password@host:port/databasename
 
-
-docker-compose build && docker-compose up -d
 
 9. In the new `.env` file, edit `REDIS_PASSWORD` with the right pass.  
 
-10. Build and run REDIS: 
-```
-$ docker-compose build redis && docker-compose up -d redis
-```
+12 Build and run REDIS:
+
+ - <local_folder_for_redis>denguechat-composedocker-compose build redis 
+
+
+ - <local_folder_for_redis>denguechat-composedocker-compose up -d redis
+ 
+13.On the file denguetorpedo on the Dockerfile add the followin if not there RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+
+14.Build and run denguetorpedo
+ 
+ - <local_folder_of_cloned_denguetorpedo_git_project>docker-compose build denguetorpedo 
+  
+ - <local_folder_of_cloned_denguetorpedo_git_project>docker-compose up -d denguetorpedo 
+ 
+15.Run the following docker-compose logs -f --tail=100 denguetorpedo
 
 11. If creating a new REDIS container, in the new `.env` file, edit `REDISTOGO_URL` and change the `<ingresar_ip_asignada_a_denguetorpedo-redis>` to reference the IP address of the redis container. You can visualize this only after creating the REDIS container, using the command: 
 ```
-$ docker inspect --format '{{ .NetworkSettings.IPAddress }}' denguetorpedo-redis
+ docker inspect --format '{{ .NetworkSettings.IPAddress }}' denguetorpedo-redis
 ```
-
 12. Run `docker-compose build && docker-compose up -d`
-13. Access DengueChat UI at `http://localhost:3000`
+
+Access DengueChat UI at http://localhost:5000
 
 ## Useful Notes: 
 ### Docker commands: 
