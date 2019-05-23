@@ -7,14 +7,11 @@ redis:
   env_file: .env
   container_name: denguetorpedo-redis
   volumes:
-    - /Users/Alan/Documents/UCA-CYT/SE2/2019/denguechat-compose/redis/redisVolume:/bitnami
+    - <local_folder_for_redis>:/bitnami
   restart: always
 
 denguetorpedo:
   build: ./denguetorpedo
-  expose:
-    - "3001"
-    - "5000"
   ports:
     - "3001:3001"
     - "5000:5000"
@@ -22,8 +19,7 @@ denguetorpedo:
   container_name: denguetorpedo
   env_file: .env
   volumes:
-    - /Users/Alan/Documents/UCA-CYT/SE2/2019/denguetorpedo:/home/dengue/denguetorpedo
-  # restart: always
+    - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
+   restart: always
   extra_hosts:
-    postgreshost: 192.168.0.13 #casalan
-    #postgreshost: 172.17.0.2
+    postgreshost: <server_ip>
