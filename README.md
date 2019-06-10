@@ -1,9 +1,6 @@
 # denguechat-compose
 Docker compose for [DengueChat](https://github.com/socialappslab/denguetorpedo), meant for developers and system administrators whow whish to install and run their local instances of DengueChat, either for development or for local use. 
 
-##Pre-requisites
-PostgreSQL above 9.6 version
-
 ## How to run: 
 
 1. Clone DengueChat's repository from [GitHub](https://github.com/socialappslab/denguetorpedo). Step inside the folder where the code is cloned. 
@@ -117,15 +114,21 @@ Puma's GEM v2.11.2 gives sometimes an installation error, which can be fixed doi
 **Note:** the line above is also part of the Dockerfile now, but just in case you can install it in the host.  
 
 ### Database
-#### Enable external connections: 
-1. Modify the `postgresql.conf` file, typically located at `/usr/local/var/postgres/postgresql.conf`, and add the following, if not there: `listen_addresses='*'`
-2. Modify the `pg_hba.conf` file, typically located at `/usr/local/var/postgres/pg_hba.conf`, and add the following: 
-```
-host   all  all    0.0.0.0/0  trust
-local  all  postgres          trust
-```
 
-#### Populate database
-1. If you have a backup, you can recover data as follows: 
-` psql denguetorpedo < denguetorpedo.sql`
+Build a PostgreSQL image from Dockerfile using the docker build command.
+
+`sudo docker build -t postgres_db:9.3 `
+
+Use below command to create a user defined network with bridge driver.
+
+`sudo docker network create --driver bridge postgres-network`
+
+ and then 
+
+`sudo docker run --name postgresondocker --network postgres-network -d postgres_db:9.3`
+
+Connect to the Postgres container
+
+`docker run -it --rm --network postgres-network postgres_db:9.3 psql -h postgres_db-U cdparra --password`
+
 
