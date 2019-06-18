@@ -57,7 +57,7 @@ $ cp .env.sample .env
 ```
 8. In the new `.env` file, edit the variable `DATABASE_URL` to include the right database user, password and name: 
     - Replace `postgres:postgres` by the right `username:password` of your database
-    - Replace `ddujs2u6bpdf88` with the right name of your database. 
+    - Replace `<ingresar_nombre_base_datos>` with the right name of your database. 
 
 
 9. In the new `.env` file, edit `REDIS_PASSWORD` with the right pass.
