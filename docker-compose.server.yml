@@ -20,4 +20,4 @@ denguetorpedo:
   env_file: .env
   volumes:
     - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
-   restart: always
+  restart: always
