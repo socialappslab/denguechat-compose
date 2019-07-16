@@ -58,11 +58,7 @@ cp docker-compose.server.yml docker-compose.yml
     - /home/appcivist/production/denguechat-compose/redis/redisVolume:/bitnami
 ```
  
-6.  **Configure the docker-compose.yml (3):** if you are using the `localdev` branch, you should also replace the variable `<server_ip>` with `${HOST_IP}`. Later you will have to configure that env variable to point to the IP address of the PostgreSQL server. If you are running postgres locally, that would be your **`host`** machine (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured. See the section [Database](#database) below.  
-```yaml
-extra_hosts:
-    postgreshost: ${HOST_IP} # configure the right IP in your ENV. 
-```
+6.  **Configure the docker-compose.yml (3):** if you are using the `localdev` branch, you should configure the ENV variable `${HOST_IP}` to point to the IP address of the PostgreSQL server. If you are running postgres locally, that would be your **`host`** machine (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured. See the section [Database](#database) below for more notes about configuring your database. 
 
 7. **Prepare your environment variables (1):** create a copy of the file `.env.sample` and name it `.env` 
 ```sh
