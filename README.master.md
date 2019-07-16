@@ -19,7 +19,7 @@ cd denguetorpedo
 git checkout develop
 ```
 
-2. **Prepare a log directory:** create a directory named `log` inside the Code Home. This is to avoid errors when the system tries to create the log file:
+2. Create a directory named `log` inside the Code Home. This is to avoid errors when the systems tries to create the log file:
 ```sh
 mkdir log
 cd .. 
@@ -31,19 +31,9 @@ git clone https://github.com/socialappslab/denguechat-compose.git
 cd denguechat-compose
 ```
 
-4. **[IMPORTANT FOR DEVELOPERS]:** create your docker compose file by renaming the proper base `.yml` file. 
-
-
-If you would like to run this on a local machine, for development purposes, use the `docker-compose.localdev.yml` as the base file
-
+4. **[IMPORTANT FOR DEVELOPERS]:** if you would like to run this on a local machine, for development purposes, make sure you checkout the `localdev` branch. Is this is for a testing of production environment, you can work on the `develop` or `master` branch: 
 ```sh
-cp docker-compose.localdev.yml docker-compose.yml
-```
-
-For deployment in a server for testing or production environments, you can work with the default `docker-compose.server.yml` file. 
-
-```sh
-cp docker-compose.server.yml docker-compose.yml
+git checkout localdev
 ```
 
 5. **Configure the docker-compose.yml (1):** in the `docker-compose.yml` file, replace the text variable `<local_folder_of_cloned_denguetorpedo_git_project>` with the path to the **Code Home** in the **`host`**. For example, suppose your Code Home is `/home/appcivist/production/denguetorpedo`, you volume should be configured as follows: 
@@ -87,7 +77,7 @@ docker-compose build redis && docker-compose up -d redis
 
 **Notes:** 
    - Remember you can run `docker-compose up` without the -d if you want to see the output of this process in foreground. If you run it with the -d flag, you can use `docker-compose logs` command to explore the logging output in search for potential issues or problems. 
-    - If you have a failure when the docker tries to run the `sudo apt-get update` command, see the section `DOCKERFILE` below for a potential fix. 
+	- If you have a failure when the docker tries to run the `sudo apt-get update` command, see the section `DOCKERFILE` below for a potential fix. 
 
 11. **Configure REDIS for DengueChat's use:** in the new `.env` file, edit `REDISTOGO_URL` and replace `<ingresar_ip_asignada_a_denguetorpedo-redis>` with the IP address of the redis container. You can visualize this IP only after creating and running the container, using the command: 
 ```sh
@@ -135,8 +125,6 @@ RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://ar
 
 
 ### Database
-You can either use your host provided postgres (if you have one running) or create your own postgres container. 
-
 #### Enable external connections: 
 1. Modify the `postgresql.conf` file, typically located at `/usr/local/var/postgres/postgresql.conf`, and add the following, if not there: `listen_addresses='*'`
 2. Modify the `pg_hba.conf` file, typically located at `/usr/local/var/postgres/pg_hba.conf`, and add the following: 
