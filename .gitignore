@@ -3,3 +3,5 @@
 redis/redis-volume/data/*
 denguetorpedo/denguetorpedo/*
 redis/redisVolume/*
+
+docker-compose\.yml

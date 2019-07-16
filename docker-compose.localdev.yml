@@ -26,5 +26,5 @@ denguetorpedo:
   - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
   restart: always
   extra_hosts:
-    postgreshost: <server_ip>
+    postgreshost: ${HOST_IP}
  
