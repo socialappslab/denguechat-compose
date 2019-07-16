@@ -51,9 +51,11 @@ git checkout localdev
 6.  **Configure the docker-compose.yml (3):** if you are using the `localdev` branch, you should also replace the variable `<server_ip>` with the IP address of the PostgreSQL server. If you are running postgres locally, that would be your **`host`** machine (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured. See the section [Database](#database) below.  
 ```yaml
 extra_hosts:
-    postgreshost: 0.0.0.0 # use the right IP here. 
+    postgreshost: 0.0.0.0 
 ```
-
+- Replace `0.0.0.0` by the right IP of your database
+	
+	
 7. **Prepare your environment variables (1):** create a copy of the file `.env.sample` and name it `.env` 
 ```sh
 cp .env.sample .env
@@ -67,6 +69,9 @@ cp .env.sample .env
 ```
 DATABASE_URL=protocol://username:password@host:port/database
 ```
+$docker-compose up -d denguetorpedo 
+```
+13. Run the following ``docker-compose logs -f --tail=100 denguetorpedo``
 
 9. **Prepare your environment variables (3):** in the new `.env` file, edit the `REDIS_PASSWORD` variable with the password you would like to configure. If you have an AWS account, use your credentials to configure the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. 
 
@@ -125,6 +130,24 @@ RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://ar
 
 
 ### Database
+
+Build a PostgreSQL image from Dockerfile using the docker build command.
+
+`sudo docker build -t postgres_db:9.3 `
+
+Use below command to create a user defined network with bridge driver.
+
+`sudo docker network create --driver bridge postgres-network`
+
+ and then 
+
+`sudo docker run --name postgresondocker --network postgres-network -d postgres_db:9.3`
+
+Connect to the Postgres container
+
+`docker run -it --rm --network postgres-network postgres_db:9.3 psql -h postgres_db-U cdparra --password`
+
+
 #### Enable external connections: 
 1. Modify the `postgresql.conf` file, typically located at `/usr/local/var/postgres/postgresql.conf`, and add the following, if not there: `listen_addresses='*'`
 2. Modify the `pg_hba.conf` file, typically located at `/usr/local/var/postgres/pg_hba.conf`, and add the following: 
