@@ -17,6 +17,7 @@ RUN chown -R dengue:dengue /usr/local/bundle
 ADD deploy.sh deploy.sh
 ADD deploy.localdev.sh deploy.localdev.sh
 RUN chmod 777 deploy.sh
+RUN chmod 777 deploy.localdev.sh
 USER dengue
 RUN mkdir ${PROJECT_HOME}/denguetorpedo
 RUN cd ${PROJECT_HOME}/denguetorpedo
