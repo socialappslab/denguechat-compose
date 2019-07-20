@@ -1,23 +1,25 @@
-redis:
-  build: ./redis
-  ports:
-    - "6379:6379"
-  net: "host"
-  env_file: .env
-  container_name: denguetorpedo-redis
-  volumes:
-    - <local_folder_for_redis>:/bitnami
-  restart: always
+version: "3"
+services:
+  redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
+    net: "host"
+    env_file: .env
+    container_name: denguetorpedo-redis
+    volumes:
+      - <local_folder_for_redis>:/bitnami
+    restart: always
 
-denguetorpedo:
-  build: ./denguetorpedo
-  ports:
-    - "3001:3001"
-    - "5000:5000"
-  command: "./deploy.sh"
-  net: "host"
-  container_name: denguetorpedo
-  env_file: .env
-  volumes:
-    - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
-  restart: always
+  denguetorpedo:
+    build: ./denguetorpedo
+    ports:
+      - "3001:3001"
+      - "5000:5000"
+    command: "./deploy.sh"
+    net: "host"
+    container_name: denguetorpedo
+    env_file: .env
+    volumes:
+      - <local_folder_of_cloned_denguetorpedo_git_project>:/home/dengue/denguetorpedo
+    restart: always

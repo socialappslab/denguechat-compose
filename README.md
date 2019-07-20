@@ -46,19 +46,24 @@ For deployment in a server for testing or production environments, you can work 
 cp docker-compose.server.yml docker-compose.yml
 ```
 
-5. **Configure the docker-compose.yml (1):** in the `docker-compose.yml` file, replace the text variable `<local_folder_of_cloned_denguetorpedo_git_project>` with the path to the **Code Home** in the **`host`**. For example, suppose your Code Home is `/home/appcivist/production/denguetorpedo`, you volume should be configured as follows: 
+5. **Configure the docker-compose.yml (1):** in the `docker-compose.yml` file, replace the text variable `<local_folder_of_cloned_denguetorpedo_git_project>` with the path to the **Code Home** in the **`host`**. For example, suppose your Code Home is `/home/user/projects/denguetorpedo`, you volume should be configured as follows: 
 ```yaml
   volumes:
-    - /home/appcivist/production/denguetorpedo:/home/dengue/denguetorpedo
+    - /home/user/projects/denguetorpedo:/home/dengue/denguetorpedo
 ```
 
 5.  **Configure the docker-compose.yml (2):** in the `docker-compose.yml` file, replace the variable `<local_folder_for_redis>` with the path where you want to store redis data and configuration in the **`host`**. For example, suppose we created `/opt/redis` in the **`host`** and want to use it to share with the redis container, the line should become the following: 
 ```yaml
   volumes:
-    - /home/appcivist/production/denguechat-compose/redis/redisVolume:/bitnami
+    - /home/user/projects/denguechat-compose/redis/redisVolume:/bitnami
 ```
  
-6.  **Configure the docker-compose.yml (3):** if you are using the `localdev` branch, you should configure the ENV variable `${HOST_IP}` to point to the IP address of the PostgreSQL server. If you are running postgres locally, that would be your **`host`** machine (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured. See the section [Database](#database) below for more notes about configuring your database. 
+6.  **Configure the docker-compose.yml (3):** if you are using the `localdev` branch, you should configure the ENV variable `${HOST_IP}` to point to the IP address of the PostgreSQL server. If you are running postgres locally, that would be your **`host`** machine (i.e., your local development machine or server IP). For this to work, the postgres server will have to be properly configured. See the section [Database](#database) below for more notes about configuring your database. You can use the script `setenv_compose.localdev.sh` to add the `HOST_IP` variable to your environment, before building the containers. Make sure the command in this script is correct for your local environment. If it is not, you can create your own version with the proper command to set the `HOST_IP` to the host machine IP. 
+
+```sh
+chmod +x setenv_compose.sh
+. ./setenv_compose.sh
+```
 
 7. **Prepare your environment variables (1):** create a copy of the file `.env.sample` and name it `.env` 
 ```sh
@@ -71,7 +76,7 @@ cp .env.sample .env
     - The formatting of this variable is shown below: 
 
 ```
-DATABASE_URL=protocol://username:password@host:port/database
+DATABASE_URL=protocol://username:password@postgreshost:port/database
 ```
 
 9. **Prepare your environment variables (3):** in the new `.env` file, edit the `REDIS_PASSWORD` variable with the password you would like to configure. If you have an AWS account, use your credentials to configure the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. 
@@ -84,13 +89,6 @@ docker-compose build redis && docker-compose up -d redis
 **Notes:** 
    - Remember you can run `docker-compose up` without the -d if you want to see the output of this process in foreground. If you run it with the -d flag, you can use `docker-compose logs` command to explore the logging output in search for potential issues or problems. 
     - If you have a failure when the docker tries to run the `sudo apt-get update` command, see the section `DOCKERFILE` below for a potential fix. 
-
-11. **Configure REDIS for DengueChat's use:** in the new `.env` file, edit `REDISTOGO_URL` and replace `<ingresar_ip_asignada_a_denguetorpedo-redis>` with the IP address of the redis container. You can visualize this IP only after creating and running the container, using the command: 
-```sh
-$ docker inspect --format '{{ .NetworkSettings.IPAddress }}' denguetorpedo-redis
-```
-
-**Note:** if the command above returns nothing, it means you are using a host network and therefore the IP to use is the same as that of the **host**.  
 
 12. **Build and run the container of DengueChat:** 
 ```sh
