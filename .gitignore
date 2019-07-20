@@ -5,3 +5,5 @@ denguetorpedo/denguetorpedo/*
 redis/redisVolume/*
 
 docker-compose\.yml
+
+setenv_compose\.sh
